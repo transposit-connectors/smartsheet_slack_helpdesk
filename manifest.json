@@ -1,19 +1,212 @@
 {
   "v2": {
     "transposit": {
+      "dependencies": [{
+        "name": "transposit/smartsheet:v1.*.*",
+        "alias": "smartsheet"
+      }, {
+        "name": "transposit/slack:v3.*.*",
+        "alias": "slack"
+      }],
       "operations": [{
-        "id": "hello_world",
-        "description": "Returns \"Hello, world\" in different languages",
+        "id": "add_rows",
+        "description": "Smartsheet API call to create a new ticket",
+        "tql": {
+          "parameters": [{
+            "name": "sheetid",
+            "description": "Smartsheet id set in environment variables",
+            "type": "STRING"
+          }, {
+            "name": "title",
+            "description": "title of the ticket",
+            "type": "STRING"
+          }, {
+            "name": "user",
+            "description": "user creating the ticket",
+            "type": "STRING"
+          }, {
+            "name": "description",
+            "description": "description of the ticket",
+            "type": "STRING"
+          }, {
+            "name": "urgency",
+            "description": "urgency of the ticket",
+            "type": "STRING"
+          }, {
+            "name": "column1",
+            "description": "The column id of the title",
+            "type": "STRING"
+          }, {
+            "name": "column2",
+            "description": "the column id of the user",
+            "type": "STRING"
+          }, {
+            "name": "column3",
+            "description": "the column id of the description",
+            "type": "STRING"
+          }, {
+            "name": "column4",
+            "description": "the column id of the urgency",
+            "type": "STRING"
+          }, {
+            "name": "column5",
+            "description": "The column id of the status",
+            "type": "STRING"
+          }],
+          "tql": "SELECT * FROM smartsheet.add_rows\n  WHERE sheetId=@sheetid\n  AND allowPartialSuccess=true\n  AND $body=(SELECT {\n    'cells' : [ {\n      'columnId' : @column1,\n      'value' : @title,\n    },\n    {\n      'columnId' : @column2,\n      'value' : @user,\n    },\n    {\n      'columnId' : @column3,\n      'value' : @description,\n    },\n    {\n      'columnId' : @column4,\n      'value' : @urgency,\n    },\n    {\n      'columnId' : @column5,\n      'value' : 'New',\n    }]\n  })\n"
+        }
+      }, {
+        "id": "list_columns",
+        "description": "Helper function to find the column ids in Smartsheet",
+        "tql": {
+          "parameters": [{
+            "name": "sheetid",
+            "description": "smartsheet id set in environment variables",
+            "type": "STRING"
+          }],
+          "tql": "SELECT id, title, type FROM smartsheet.list_columns\n  WHERE sheetId=@sheetid\n"
+        }
+      }, {
+        "id": "open_dialog",
+        "description": "API call for Slack to open a dialog",
+        "tql": {
+          "parameters": [{
+            "name": "trigger_id",
+            "description": "Slack trigger id for event",
+            "type": "STRING"
+          }, {
+            "name": "text",
+            "description": "Optional title text",
+            "type": "STRING"
+          }],
+          "tql": "SELECT * FROM slack.open_dialog\n  WHERE $body=(SELECT {\n    'dialog' : {\n      'title': 'Submit a support ticket',\n      'callback_id': 'submit-ticket',\n      'submit_label': 'Submit',\n      'elements': [\n        {\n          'label': 'Title',\n          'type': 'text',\n          'name': 'title',\n          'value': @text,\n          'hint': '30 second summary of the problem',\n        },\n        {\n          'label': 'Description',\n          'type': 'textarea',\n          'name': 'description',\n          'optional': true,\n        },\n        {\n          'label': 'Urgency',\n          'type': 'select',\n          'name': 'urgency',\n          'options': [\n            { 'label': 'Blue (None)', 'value': 'Blue' },\n            { 'label': 'Green (Low)', 'value': 'Green' },\n            { 'label': 'Yellow (Medium)', 'value': 'Yellow' },\n            { 'label': 'Red (High)', 'value': 'Red' },\n          ],\n        },\n      ]\n    },\n    'trigger_id' : @trigger_id\n  })\n  "
+        }
+      }, {
+        "id": "submit_ticket",
+        "description": "Webhook that is called when the dialog button is pushed.",
         "function": {
-          "js": "hello_world.js"
+          "parameters": [{
+            "name": "http_event",
+            "default": {
+              "text": "{\"http_method\": \"GET\", \"query_parameters\": {}, \"headers\": {}, \"body\": \"\"}"
+            },
+            "type": "OBJECT"
+          }],
+          "js": "submit_ticket.js"
         },
         "access": {
-          "requireUser": true
+          "requireApiKey": true,
+          "webhook": true
+        }
+      }, {
+        "id": "create_ticket",
+        "description": "The webhook function that is called after a slash command",
+        "function": {
+          "parameters": [{
+            "name": "http_event",
+            "default": {
+              "text": "{\"http_method\": \"GET\", \"query_parameters\": {}, \"headers\": {}, \"body\": \"\"}"
+            },
+            "type": "OBJECT"
+          }],
+          "js": "create_ticket.js"
+        },
+        "access": {
+          "requireApiKey": true,
+          "webhook": true
+        }
+      }, {
+        "id": "list_sheets",
+        "description": "Helper function to find your sheet id in Smartsheet",
+        "tql": {
+          "tql": "SELECT * FROM smartsheet.list_sheets\n"
+        }
+      }, {
+        "id": "get_email",
+        "description": "Helper function to get the email of a Slack user",
+        "tql": {
+          "parameters": [{
+            "name": "user",
+            "description": "Slack user id",
+            "type": "STRING"
+          }],
+          "tql": "SELECT user.profile.email FROM slack.get_users_info\n  WHERE user=@user\n"
+        }
+      }, {
+        "id": "confirm_ticket",
+        "description": "Contains the data to send a confirmation message back to a slack user",
+        "tql": {
+          "parameters": [{
+            "name": "channel",
+            "description": "the slack user channel",
+            "type": "STRING"
+          }, {
+            "name": "header",
+            "description": "the header text",
+            "type": "STRING"
+          }, {
+            "name": "title",
+            "description": "the ticket title",
+            "type": "STRING"
+          }, {
+            "name": "description",
+            "description": "the description of the ticket",
+            "type": "STRING"
+          }, {
+            "name": "urgency",
+            "description": "the urgency of the ticket",
+            "type": "STRING"
+          }],
+          "tql": "SELECT * FROM slack.post_chat_message\n  WHERE $body=(SELECT {\n    'channel': @channel,\n    'as_user': true,\n    'text': 'Helpdesk ticket created!',\n    'attachments': [\n      {\n        'title': @header,\n        'fields': [\n          {\n            'title': 'Title',\n            'value': @title,\n          },\n          {\n            'title': 'Description',\n            'value': @description,\n          },\n          {\n            'title': 'Status',\n            'value': 'Open',\n            'short': true,\n          },\n          {\n            'title': 'Urgency',\n            'value': @urgency,\n            'short': true,\n          },\n        ],\n      },\n    ]\n  })\n"
+        }
+      }],
+      "dataConnections": [{
+        "ref": "slack_identify.raw",
+        "overrides": {
+          "swagger": {
+            "oauthConfig": {
+              "scope": "identity.basic"
+            },
+            "executionLimits": {
+            }
+          }
+        },
+        "title": "Slack",
+        "description": "Used to identify you on Slack"
+      }, {
+        "ref": "slack_bot.raw",
+        "overrides": {
+          "swagger": {
+            "oauthConfig": {
+              "scope": "chat:write:bot"
+            },
+            "executionLimits": {
+            }
+          }
+        }
+      }, {
+        "ref": "slack.raw",
+        "overrides": {
+          "swagger": {
+            "oauthConfig": {
+              "scope": "bot,commands,chat:write:bot",
+              "accessTokenPath": "bot.bot_access_token"
+            },
+            "executionLimits": {
+            }
+          }
         }
       }],
       "javascriptAPIVersion": "3",
       "source": "src",
-      "userSettingsDisplay": "GENERATED"
-    }
+      "userSettingsDisplay": "GENERATED",
+      "appSettings": [{
+        "name": "sheetid",
+        "description": "Your smartsheet id. You can get this by running list_sheets and copying the value of id.",
+        "type": "STRING"
+      }]
+    },
+    "description": "An app that allows a user to make a help ticket in Smartsheets by using Slack",
+    "displayName": "Smartsheet Slack Tickets"
   }
 }
