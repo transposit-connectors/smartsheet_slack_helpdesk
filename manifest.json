@@ -207,6 +207,6 @@
       }]
     },
     "description": "An app that allows a user to make a help ticket in Smartsheets by using Slack",
-    "displayName": "Smartsheet Slack Tickets"
+    "displayName": "Smartsheet Slack Helpdesk"
   }
 }
