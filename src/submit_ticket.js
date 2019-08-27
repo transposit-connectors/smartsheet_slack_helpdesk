@@ -6,7 +6,6 @@
   // Create the ticket entry in our databse
   api.run('this.add_rows', {
     						 sheetid: env.get('sheetid'),
-                             //user: api.run('this.get_email', {user: body.user.id})[0].email,
     						 user: api.query('SELECT user.profile.email FROM slack.get_users_info WHERE user=@user', 
                           		{user: body.user.id})[0].email,
     						 date: new Date(moment().format("MM/DD/YYYY")),
