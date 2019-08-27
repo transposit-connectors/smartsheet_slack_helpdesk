@@ -1,4 +1,5 @@
 # Smartsheet Slack Helpdesk
+
 # Smartsheet Slack helpdesk app
 
 A Slackbot helper that lets users in a Slack workspace create helpdesk tickets in Smartsheet, based on the [IT Request Management Template](https://www.smartsheet.com/marketplace/templates/it-request-management) by Smartsheet.
@@ -58,8 +59,6 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 `get_email`: Helper function to get the email of a Slack user.
 
 `list_columns`: Helper function to find the column ids in Smartsheet.
-
-`list_sheets`: Helper function to find your sheet id in Smartsheet.
 
 `open_dialog`: API call for Slack to open a dialog.
 
