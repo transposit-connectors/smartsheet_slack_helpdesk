@@ -10,29 +10,21 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 
 1. Create an app at [https://api.slack.com/apps](https://api.slack.com/apps)
 2. Add a Slash command (See _Add a Slash Command_ section below)
-3. Navigate to **Bot Users** and click "Add a Bot User" to create one.
+3. Navigate to **Bot Users** and click "Add a Bot User" to create one. Name it whatever you would like.
 4. Enable Interactive components (See _Enable Interactive Components_ below)
 5. Navigate to the **OAuth & Permissions** page and make sure the following scopes are pre-selected:
    - `commands`
    - `bot`
    - `chat:write:bot`
 6. Add https://accounts.transposit.com/oauth/v2/handle-redirect as a Redirect URI.
-7. Click 'Save Changes' and install the app (You should get an OAuth access token after the installation)
-
-#### Add a Slash Command
-
-1. Go back to the app settings and click on Slash Commands.
-1. Click the 'Create New Command' button and fill in the following:
+7. Navigate to **Slash Commands** and click the 'Create New Command' button and fill in the following:
    - Command: `/helpdesk`
    - Request URL: the generated webhook url for `create_ticket` in Transposit under Deploy
    - Short description: `Create a helpdesk ticket`
    - Usage hint: `[the problem you're having]`
-
-#### Enable Interactive Components
-
-1. Go back to the app settings and click on Interactive Components.
-2. Set the Request URL to the generated webhook url for `submit_ticket` in Transposit under Deploy
-3. Save the change.
+8. Navigate to **Interactive Components**.
+9. Set the Request URL to the generated webhook url for `submit_ticket` in Transposit under Deploy
+10. Click 'Save Changes' and install the app to your workspace.
 
 #### Create your Database in Smartsheet
 
