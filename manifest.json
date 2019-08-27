@@ -17,10 +17,6 @@
             "description": "Smartsheet id set in environment variables",
             "type": "STRING"
           }, {
-            "name": "title",
-            "description": "title of the ticket",
-            "type": "STRING"
-          }, {
             "name": "user",
             "description": "user creating the ticket",
             "type": "STRING"
@@ -29,31 +25,37 @@
             "description": "description of the ticket",
             "type": "STRING"
           }, {
-            "name": "urgency",
-            "description": "urgency of the ticket",
+            "name": "priority",
             "type": "STRING"
           }, {
-            "name": "column1",
-            "description": "The column id of the title",
+            "name": "team",
+            "type": "STRING"
+          }, {
+            "name": "department",
             "type": "STRING"
           }, {
             "name": "column2",
-            "description": "the column id of the user",
             "type": "STRING"
           }, {
             "name": "column3",
-            "description": "the column id of the description",
             "type": "STRING"
           }, {
             "name": "column4",
-            "description": "the column id of the urgency",
             "type": "STRING"
           }, {
             "name": "column5",
-            "description": "The column id of the status",
+            "type": "STRING"
+          }, {
+            "name": "column6",
+            "type": "STRING"
+          }, {
+            "name": "column7",
+            "type": "STRING"
+          }, {
+            "name": "column11",
             "type": "STRING"
           }],
-          "tql": "SELECT * FROM smartsheet.add_rows\n  WHERE sheetId=@sheetid\n  AND allowPartialSuccess=true\n  AND $body=(SELECT {\n    'cells' : [ {\n      'columnId' : @column1,\n      'value' : @title,\n    },\n    {\n      'columnId' : @column2,\n      'value' : @user,\n    },\n    {\n      'columnId' : @column3,\n      'value' : @description,\n    },\n    {\n      'columnId' : @column4,\n      'value' : @urgency,\n    },\n    {\n      'columnId' : @column5,\n      'value' : 'New',\n    }]\n  })\n"
+          "tql": "SELECT * FROM smartsheet.add_rows\n  WHERE sheetId=@sheetid\n  AND allowPartialSuccess=true\n  AND $body=(SELECT {\n    'cells' : [ {\n      'columnId' : @column2,\n      'value' : @description,\n    },\n    {\n      'columnId' : @column3,\n      'value' : 'Recieved',\n    },\n    {\n      'columnId' : @column4,\n      'value' : @priority,\n    },\n    {\n      'columnId' : @column5,\n      'value' : 'Empty',\n    },\n    {\n      'columnId' : @column6,\n      'value' : @team,\n    },\n    {\n      'columnId' : @column7,\n      'value' : @department,\n    },\n    {\n      'columnId' : @column11,\n      'value' : @user,\n    },]\n  })\n"
         }
       }, {
         "id": "list_columns",
@@ -79,7 +81,7 @@
             "description": "Optional title text",
             "type": "STRING"
           }],
-          "tql": "SELECT * FROM slack.open_dialog\n  WHERE $body=(SELECT {\n    'dialog' : {\n      'title': 'Submit a support ticket',\n      'callback_id': 'submit-ticket',\n      'submit_label': 'Submit',\n      'elements': [\n        {\n          'label': 'Title',\n          'type': 'text',\n          'name': 'title',\n          'value': @text,\n          'hint': '30 second summary of the problem',\n        },\n        {\n          'label': 'Description',\n          'type': 'textarea',\n          'name': 'description',\n          'optional': true,\n        },\n        {\n          'label': 'Urgency',\n          'type': 'select',\n          'name': 'urgency',\n          'options': [\n            { 'label': 'Blue (None)', 'value': 'Blue' },\n            { 'label': 'Green (Low)', 'value': 'Green' },\n            { 'label': 'Yellow (Medium)', 'value': 'Yellow' },\n            { 'label': 'Red (High)', 'value': 'Red' },\n          ],\n        },\n      ]\n    },\n    'trigger_id' : @trigger_id\n  })\n  "
+          "tql": "SELECT * FROM slack.open_dialog\n  WHERE $body=(SELECT {\n    'dialog' : {\n      'title': 'Submit a support ticket',\n      'callback_id': 'submit-ticket',\n      'submit_label': 'Submit',\n      'elements': [\n        {\n          'label': 'Issue Description',\n          'type': 'text',\n          'name': 'description',\n          'value': @text,\n          'hint': '30 second summary of the problem',\n        },\n        {\n          'label': 'Priority',\n          'type': 'select',\n          'name': 'priority',\n          'options': [\n            { 'label': 'None', 'value': '' },\n            { 'label': 'Low', 'value': 'Low' },\n            { 'label': 'High', 'value': 'High' },\n          ],\n        },\n        {\n          'label': 'Team',\n          'type': 'select',\n          'name': 'priority',\n          'options': [\n            { 'label': 'IT', 'value': 'IT' },\n            { 'label': 'Hardware', 'value': 'Hardware' },\n            { 'label': 'Network', 'value': 'Network' },\n          ],\n        },\n        {\n          'label': 'Department',\n          'type': 'select',\n          'name': 'priority',\n          'options': [\n            { 'label': 'Audit', 'value': 'Audit' },\n            { 'label': 'Compliance', 'value': 'Compliance' },\n            { 'label': 'Customer Success', 'value': 'Customer Success' },\n            { 'label': 'HR', 'value': 'HR' },\n            { 'label': 'Legal', 'value': 'Legal' },\n            { 'label': 'Marketing', 'value': 'Marketing' },\n            { 'label': 'Mobile Department', 'value': 'Mobile Department' },\n            { 'label': 'Operations', 'value': 'Operations' },\n            { 'label': 'Sales', 'value': 'Sales' },\n          ],\n        },\n      ]\n    },\n    'trigger_id' : @trigger_id\n  })\n  "
         }
       }, {
         "id": "submit_ticket",
@@ -92,7 +94,8 @@
             },
             "type": "OBJECT"
           }],
-          "js": "submit_ticket.js"
+          "js": "submit_ticket.js",
+          "lang": "js"
         },
         "access": {
           "requireApiKey": true,
@@ -109,7 +112,8 @@
             },
             "type": "OBJECT"
           }],
-          "js": "create_ticket.js"
+          "js": "create_ticket.js",
+          "lang": "js"
         },
         "access": {
           "requireApiKey": true,

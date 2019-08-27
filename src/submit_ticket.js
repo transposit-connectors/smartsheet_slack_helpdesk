@@ -1,6 +1,6 @@
 ({ http_event }) => {
   let body = JSON.parse(http_event.parsed_body.payload);
-  
+  return body;
   let columns = api.run('this.list_columns', { sheetid: env.get('sheetid') });
 
   // Create the ticket entry in our databse
@@ -10,11 +10,13 @@
                              title: body.submission.title,
                              description: body.submission.description,
                              urgency: body.submission.urgency,
-    						 column1: columns[0].id,
     						 column2: columns[2].id,
-    						 column3: columns[4].id,
-    						 column4: columns[5].id,
-    						 column5: columns[6].id,
+    						 column3: columns[3].id,
+    						 column4: columns[4].id,
+    						 column5: columns[5].id,
+    						 column6: columns[6].id,
+    						 column7: columns[7].id,
+    						 column11: columns[11].id,
                            });
   // Choose the description and return to user
   if (body.submission.description) {
