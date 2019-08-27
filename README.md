@@ -38,14 +38,13 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 
 1. If you are new to Smartsheet, check out their [Learning Center](https://help.smartsheet.com/).
 2. Download the [IT Request Management Template](https://www.smartsheet.com/marketplace/templates/it-request-management) to your Smartsheet account.
+3. In the sheet, click \*_File > Properties..._ and copy the value for _Sheet ID_.
 
 #### Fork in Transposit
 
 1. Authenticate Slack's API token with the Client ID and Secret under **Data connections > Slack > Authentication**. You can find this in your Slack App under App Credentials.
-2. Add Smartsheet and Slack's keys to development under **Code > Auth & Settings** and follow the instructions.
-3. Repeat the above step, but for production, under **Deploy > Production Keys**.
-4. Find your Smartsheet sheet id by running `list_sheets`.
-5. Copy the Smartsheet id value to [environment variables](https://www.transposit.com/docs/building/environment-variables/) in **Deploy**.
+2. Add Smartsheet and Slack's keys to production under **Deploy > Production Keys** and follow the instructions.
+3. Copy the _Sheet ID_ from Smartsheet into [environment variables](https://www.transposit.com/docs/building/environment-variables/) in **Deploy**.
 
 ### Transposit Functions
 
