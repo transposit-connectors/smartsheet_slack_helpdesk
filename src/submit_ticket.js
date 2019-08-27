@@ -1,13 +1,14 @@
 ({ http_event }) => {
   var moment = require('moment.js');
   let body = JSON.parse(http_event.parsed_body.payload);
-  //let columns = api.run('this.list_columns', { sheetid: env.get('sheetid') });
   let columns = api.query('SELECT id, title, type FROM smartsheet.list_columns WHERE sheetId=@sheetid', 
-                          { sheetid: env.get('sheetid') });
+      { sheetid: env.get('sheetid') });
   // Create the ticket entry in our databse
   api.run('this.add_rows', {
     						 sheetid: env.get('sheetid'),
-                             user: api.run('this.get_email', {user: body.user.id})[0].email,
+                             //user: api.run('this.get_email', {user: body.user.id})[0].email,
+    						 user: api.query('SELECT user.profile.email FROM slack.get_users_info WHERE user=@user', 
+                          		{user: body.user.id})[0].email,
     						 date: new Date(moment().format("MM/DD/YYYY")),
                              description: body.submission.description,
                              priority: body.submission.priority,
