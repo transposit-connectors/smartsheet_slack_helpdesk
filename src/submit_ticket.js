@@ -17,7 +17,7 @@
     						 column4: columns[4].id,
     						 column5: columns[5].id,
     						 column6: columns[6].id,
-    						 column7: columns[7].id,
+    						 //column7: columns[7].id,
     						 column11: columns[11].id,
     						 column15: columns[15].id,
                            });
