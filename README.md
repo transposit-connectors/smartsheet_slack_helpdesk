@@ -56,10 +56,6 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 
 `create_ticket`: The webhook function that is called after a slash command
 
-`get_email`: Helper function to get the email of a Slack user.
-
-`list_columns`: Helper function to find the column ids in Smartsheet.
-
 `open_dialog`: API call for Slack to open a dialog.
 
 `submit_ticket`: Webhook that is called when the dialog button is pushed.
