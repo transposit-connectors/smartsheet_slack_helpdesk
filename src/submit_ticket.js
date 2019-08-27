@@ -1,6 +1,5 @@
 ({ http_event }) => {
   let body = JSON.parse(http_event.parsed_body.payload);
-  return body;
   let columns = api.run('this.list_columns', { sheetid: env.get('sheetid') });
 
   // Create the ticket entry in our databse
