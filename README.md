@@ -4,7 +4,7 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 
 ## Setup
 
-[Fork this app on Transposit](https://console.transposit.com/t/transposit-sample/smartsheet_slack_helpdesk?readme=true)
+[Fork this app on Transposit](https://console.transposit.com/t/transposit-sample/smartsheet_slack_helpdesk?fork=true)
 
 #### Create a Slack app
 
@@ -42,7 +42,7 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 
 1. Authenticate your API token with Slack
 2. Authenticate Slackbot's API token with the Client iD in your Slack App under Authentication
-3. Find your Smartsheet sheet id by running `list_sheets` and copying the id value to environment variables.
+3. Find your Smartsheet sheet id by running `list_sheets` and copying the id value to [environment variables](https://www.transposit.com/docs/building/environment-variables/).
 
 ### Transposit Functions
 
