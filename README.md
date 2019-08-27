@@ -1,3 +1,4 @@
+# Smartsheet Slack Helpdesk
 # Smartsheet Slack helpdesk app
 
 A Slackbot helper that lets users in a Slack workspace create helpdesk tickets in Smartsheet, based on the [IT Request Management Template](https://www.smartsheet.com/marketplace/templates/it-request-management) by Smartsheet.
