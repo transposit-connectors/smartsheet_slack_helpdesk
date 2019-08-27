@@ -7,7 +7,7 @@
   api.run('this.add_rows', {
     						 sheetid: env.get('sheetid'),
                              user: api.run('this.get_email', {user: body.user.id})[0].email,
-    						 date: moment().format("MM/DD/YYYY"),
+    						 date: new Date(moment().format("MM/DD/YYYY")),
                              description: body.submission.description,
                              priority: body.submission.priority,
     						 team: body.submission.team,
@@ -22,14 +22,14 @@
     						 column15: columns[15].id,
                            });
 
-  // api.run('this.confirm_ticket', {
-  //     								channel: body.user.id,
-  //                                   header: `Ticket created for ${body.user.name}`,
-  //                                   description: body.submission.description,
-  //                                   priority: body.submission.priority,
-  //                                   team: body.submission.team,
-  //                                   department: body.submission.department,
-  //                                  });
+  api.run('this.confirm_ticket', {
+      								channel: body.user.id,
+                                    header: `Ticket created for ${body.user.name}`,
+                                    description: body.submission.description,
+                                    priority: body.submission.priority,
+                                    team: body.submission.team,
+                                    department: body.submission.department,
+                                   });
     
   return { status_code: 200 };
 }

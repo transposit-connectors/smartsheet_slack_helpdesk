@@ -61,7 +61,7 @@
             "name": "column15",
             "type": "STRING"
           }],
-          "tql": "SELECT * FROM smartsheet.add_rows\n  WHERE sheetId=@sheetid\n  AND allowPartialSuccess=true\n  AND $body=(SELECT {\n    'cells' : [ {\n      'columnId' : @column2,\n      'value' : @description,\n    },\n    {\n      'columnId' : @column3,\n      'value' : 'Received',\n    },\n    {\n      'columnId' : @column4,\n      'value' : @priority,\n    },\n    {\n      'columnId' : @column5,\n      'value' : 'Empty',\n    },\n    {\n      'columnId' : @column6,\n      'value' : @team,\n    },\n    {\n      'columnId' : @column7,\n      'value' : @department,\n    },\n    {\n      'columnId' : @column11,\n      'value' : @user,\n    },\n    {\n      'columnId' : @column15,\n      'value' : @date,\n    },]\n  })\n"
+          "tql": "SELECT * FROM smartsheet.add_rows\n  WHERE sheetId=@sheetid\n  AND allowPartialSuccess=true\n  AND $body=(SELECT {\n    'cells' : [ {\n      'columnId' : @column2,\n      'value' : @description,\n    },\n    {\n      'columnId' : @column3,\n      'value' : 'Received',\n    },\n    {\n      'columnId' : @column4,\n      'value' : @priority,\n    },\n    {\n      'columnId' : @column5,\n      'value' : 'Empty',\n    },\n    {\n      'columnId' : @column6,\n      'value' : @team,\n    },\n    {\n      'columnId' : @column7,\n      'value' : @department,\n    },\n    {\n      'columnId' : @column11,\n      'value' : @user,\n    },\n    {\n      'columnId' : @column15,\n      'value' : @date,\n    },\n    ]\n  })\n"
         }
       }, {
         "id": "list_columns",
@@ -155,7 +155,7 @@
             "description": "the header text",
             "type": "STRING"
           }, {
-            "name": "title",
+            "name": "team",
             "description": "the ticket title",
             "type": "STRING"
           }, {
@@ -163,11 +163,14 @@
             "description": "the description of the ticket",
             "type": "STRING"
           }, {
-            "name": "urgency",
+            "name": "priority",
             "description": "the urgency of the ticket",
             "type": "STRING"
+          }, {
+            "name": "department",
+            "type": "STRING"
           }],
-          "tql": "SELECT * FROM slack.post_chat_message\n  WHERE $body=(SELECT {\n    'channel': @channel,\n    'as_user': true,\n    'text': 'Helpdesk ticket created!',\n    'attachments': [\n      {\n        'title': @header,\n        'fields': [\n          {\n            'title': 'Title',\n            'value': @title,\n          },\n          {\n            'title': 'Description',\n            'value': @description,\n          },\n          {\n            'title': 'Status',\n            'value': 'Open',\n            'short': true,\n          },\n          {\n            'title': 'Urgency',\n            'value': @urgency,\n            'short': true,\n          },\n        ],\n      },\n    ]\n  })\n"
+          "tql": "SELECT * FROM slack.post_chat_message\n  WHERE $body=(SELECT {\n    'channel': @channel,\n    'as_user': true,\n    'text': 'Helpdesk ticket created!',\n    'attachments': [\n      {\n        'title': @header,\n        'fields': [\n          {\n            'title': 'Description',\n            'value': @description,\n          },\n          {\n            'title': 'Status',\n            'value': 'Received',\n            'short': true,\n          },\n          {\n            'title': 'Priority',\n            'value': @priority,\n            'short': true,\n          },\n          {\n            'title': 'Team',\n            'value': @team,\n            'short': true,\n          },\n          {\n            'title': 'Department',\n            'value': @department,\n            'short': true,\n          },\n        ],\n      },\n    ]\n  })\n"
         }
       }],
       "dataConnections": [{
