@@ -126,12 +126,6 @@
           "webhook": true
         }
       }, {
-        "id": "list_sheets",
-        "description": "Helper function to find your sheet id in Smartsheet",
-        "tql": {
-          "tql": "SELECT * FROM smartsheet.list_sheets\n"
-        }
-      }, {
         "id": "get_email",
         "description": "Helper function to get the email of a Slack user",
         "tql": {
