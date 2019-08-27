@@ -2,7 +2,7 @@
   var moment = require('moment.js');
   let body = JSON.parse(http_event.parsed_body.payload);
   let columns = api.run('this.list_columns', { sheetid: env.get('sheetid') });
-return body;
+
   // Create the ticket entry in our databse
   api.run('this.add_rows', {
     						 sheetid: env.get('sheetid'),

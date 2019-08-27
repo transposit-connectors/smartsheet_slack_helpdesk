@@ -61,7 +61,7 @@
             "name": "column15",
             "type": "STRING"
           }],
-          "tql": "SELECT * FROM smartsheet.add_rows\n  WHERE sheetId=@sheetid\n  AND allowPartialSuccess=true\n  AND $body=(SELECT {\n    'cells' : [ {\n      'columnId' : @column2,\n      'value' : @description,\n    },\n    {\n      'columnId' : @column3,\n      'value' : 'Recieved',\n    },\n    {\n      'columnId' : @column4,\n      'value' : @priority,\n    },\n    {\n      'columnId' : @column5,\n      'value' : 'Empty',\n    },\n    {\n      'columnId' : @column6,\n      'value' : @team,\n    },\n    {\n      'columnId' : @column7,\n      'value' : 'Marketing',\n    },\n    {\n      'columnId' : @column11,\n      'value' : @user,\n    },\n    {\n      'columnId' : @column15,\n      'value' : @date,\n    },]\n  })\n"
+          "tql": "SELECT * FROM smartsheet.add_rows\n  WHERE sheetId=@sheetid\n  AND allowPartialSuccess=true\n  AND $body=(SELECT {\n    'cells' : [ {\n      'columnId' : @column2,\n      'value' : @description,\n    },\n    {\n      'columnId' : @column3,\n      'value' : 'Received',\n    },\n    {\n      'columnId' : @column4,\n      'value' : @priority,\n    },\n    {\n      'columnId' : @column5,\n      'value' : 'Empty',\n    },\n    {\n      'columnId' : @column6,\n      'value' : @team,\n    },\n    {\n      'columnId' : @column7,\n      'value' : @department,\n    },\n    {\n      'columnId' : @column11,\n      'value' : @user,\n    },\n    {\n      'columnId' : @column15,\n      'value' : @date,\n    },]\n  })\n"
         }
       }, {
         "id": "list_columns",
