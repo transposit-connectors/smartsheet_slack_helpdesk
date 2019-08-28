@@ -9,6 +9,7 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 #### Create a Slack app
 
 1. Create an app at [https://api.slack.com/apps](https://api.slack.com/apps)
+
 2. Add a Slash command:
    1. Go back to the app settings and click on Slash Commands.
    1. Click the 'Create New Command' button and fill in the following:
@@ -18,7 +19,7 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
       - Usage hint: `[the problem you're having]`
 
 3. Navigate to **Bot Users** and click "Add a Bot User":
-   1. Leave the default display name and username and click "Add Bot User" to create one.
+   1. Name the bot whatever you would like and click "Add Bot User" to create one.
    
 4. Enable Interactive components:
    1. Go back to the app settings and click on Interactive Components.
@@ -33,7 +34,6 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
       - `chat:write:bot`
    6. Add https://accounts.transposit.com/oauth/v2/handle-redirect as a Redirect URI.
    7. Click 'Save Changes' and then click "Install App to Workspace". 
-   8. You should have an OAuth Access Token and a Bot User OAuth Access Token after the installation.
 
 #### Create your Database in Smartsheet
 
