@@ -9,42 +9,48 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 #### Create a Slack app
 
 1. Create an app at [https://api.slack.com/apps](https://api.slack.com/apps)
-2. Add a Slash command (See _Add a Slash Command_ section below)
-3. Navigate to **Bot Users** and click "Add a Bot User" to create one.
-4. Enable Interactive components (See _Enable Interactive Components_ below)
-5. Navigate to the **OAuth & Permissions** page and make sure the following scopes are pre-selected:
-   - `commands`
-   - `bot`
-   - `chat:write:bot`
-6. Add https://accounts.transposit.com/oauth/v2/handle-redirect as a Redirect URI.
-7. Click 'Save Changes' and install the app (You should get an OAuth access token after the installation)
+2. Add a Slash command:
+   1. Go back to the app settings and click on Slash Commands.
+   1. Click the 'Create New Command' button and fill in the following:
+      - Command: `/helpdesk`
+      - Request URL: the generated webhook url for `create_ticket` in Transposit under Deploy
+      - Short description: `Create a helpdesk ticket`
+      - Usage hint: `[the problem you're having]`
 
-#### Add a Slash Command
+3. Navigate to **Bot Users** and click "Add a Bot User":
+   1. Leave the default display name and username and click "Add Bot User" to create one.
+   
+4. Enable Interactive components:
+   1. Go back to the app settings and click on Interactive Components.
+   2. Turn on the Interactivity switch.
+   2. Set the Request URL to the generated webhook url for `submit_ticket` in Transposit under Deploy.
+   3. Save the change.
 
-1. Go back to the app settings and click on Slash Commands.
-1. Click the 'Create New Command' button and fill in the following:
-   - Command: `/helpdesk`
-   - Request URL: the generated webhook url for `create_ticket` in Transposit under Deploy
-   - Short description: `Create a helpdesk ticket`
-   - Usage hint: `[the problem you're having]`
-
-#### Enable Interactive Components
-
-1. Go back to the app settings and click on Interactive Components.
-2. Set the Request URL to the generated webhook url for `submit_ticket` in Transposit under Deploy
-3. Save the change.
+5. Navigate to the **OAuth & Permissions** page:
+   1. Make sure the following scopes are pre-selected:
+      - `commands`
+      - `bot`
+      - `chat:write:bot`
+   6. Add https://accounts.transposit.com/oauth/v2/handle-redirect as a Redirect URI.
+   7. Click 'Save Changes' and then click "Install App to Workspace". 
+   8. You should have an OAuth Access Token and a Bot User OAuth Access Token after the installation.
 
 #### Create your Database in Smartsheet
 
 1. If you are new to Smartsheet, check out their [Learning Center](https://help.smartsheet.com/).
 2. Download the [IT Request Management Template](https://www.smartsheet.com/marketplace/templates/it-request-management) to your Smartsheet account.
-3. In the sheet, click \*_File > Properties..._ and copy the value for _Sheet ID_.
 
-#### Fork in Transposit
+#### Connect Smartsheet and Slack in Transposit
 
-1. Authenticate Slack's API token with the Client ID and Secret under **Data connections > Slack > Authentication**. You can find this in your Slack App under App Credentials.
+1. Configure your Slack App's connection to Transposit:
+   1. Find your Client ID and Secret in your Slack app under **Basic Information > App Credentials**. 
+   2. In your Transposit app, go to **Data connections > Slack > Authentication** and change the values to your Slack app's Client ID and Secret.
+   
+2. Configure your Smartsheet's connection to Transposit:
+   3. In your Smartsheet sheet, click \*_File > Properties..._ and copy the value for _Sheet ID_.
+   3. Add the Sheet ID value to [environment variables](https://www.transposit.com/docs/building/environment-variables/) in Transposit under **Deploy > Environment Variables**.
+   
 2. Add Smartsheet and Slack's keys to production under **Deploy > Production Keys** and follow the instructions.
-3. Copy the _Sheet ID_ from Smartsheet into [environment variables](https://www.transposit.com/docs/building/environment-variables/) in **Deploy**.
 
 ### Transposit Functions
 
