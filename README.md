@@ -54,7 +54,7 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 
 ### Try it out!
 
-1. Type your new slash command in your Slack workspace: you should get a dialog box allowing you to create a new help ticket.
+1. Type your new slash command `/helpdesk` in your Slack workspace: you should get a dialog box allowing you to create a new help ticket.
 2. After creating the ticket, you should get a message from your bot telling you the ticket has been created.
 3. Refresh your Smartsheet: your new ticket should be there!
 
