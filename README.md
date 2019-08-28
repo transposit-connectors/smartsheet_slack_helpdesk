@@ -47,8 +47,8 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
    2. In your Transposit app, go to **Data connections > Slack > Authentication** and change the values to your Slack app's Client ID and Secret.
    
 2. Configure your Smartsheet's connection to Transposit:
-   3. In your Smartsheet sheet, click \*_File > Properties..._ and copy the value for _Sheet ID_.
-   3. Add the Sheet ID value to [environment variables](https://www.transposit.com/docs/building/environment-variables/) in Transposit under **Deploy > Environment Variables**.
+   1. In your Smartsheet sheet, click \*_File > Properties..._ and copy the value for _Sheet ID_.
+   2. Add the Sheet ID value to [environment variables](https://www.transposit.com/docs/building/environment-variables/) in Transposit under **Deploy > Environment Variables**.
    
 2. Add Smartsheet and Slack's keys to production under **Deploy > Production Keys** and follow the instructions.
 
