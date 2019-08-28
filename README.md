@@ -52,14 +52,14 @@ A Slackbot helper that lets users in a Slack workspace create helpdesk tickets i
 
 2. Configure your Smartsheet's connection to Transposit:
 
-   3. In your Smartsheet sheet, click \*_File > Properties..._ and copy the value for _Sheet ID_.
-   4. Add the Sheet ID value to [environment variables](https://www.transposit.com/docs/building/environment-variables/) in Transposit under **Deploy > Environment Variables**.
+   1. In your Smartsheet sheet, click \*_File > Properties..._ and copy the value for _Sheet ID_.
+   2. Add the Sheet ID value to [environment variables](https://www.transposit.com/docs/building/environment-variables/) in Transposit under **Deploy > Environment Variables**.
 
 3. Add Smartsheet and Slack's keys to production under **Deploy > Production Keys** and follow the instructions.
 
 ### Try it out!
 
-1. Type your new slash command in your Slack workspace: you should get a dialog box allowing you to create a new help ticket.
+1. Type your new slash command `/helpdesk` in your Slack workspace: you should get a dialog box allowing you to create a new help ticket.
 2. After creating the ticket, you should get a message from your bot telling you the ticket has been created.
 3. Refresh your Smartsheet: your new ticket should be there!
 
